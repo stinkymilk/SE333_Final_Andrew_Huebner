@@ -2,9 +2,9 @@
 
 ## Latest Metrics
 
-- **Timestamp**: 2026-03-09TXX:XX:XX
-- **Branch**: test-improvement/20260309
-- **Commit**: 30cfab3
+- **Timestamp**: 2026-03-09
+- **Branch**: main
+- **Commit**: 99a5b78
 
 ### Coverage Metrics
 
@@ -23,8 +23,8 @@
 
 ### Bug Metrics
 
-- Bugs Discovered: 0
-- Bugs Fixed: 0
+- Bugs Discovered: 1 (package declaration errors)
+- Bugs Fixed: 1
 
 ## Iteration History
 
@@ -52,6 +52,14 @@
 - Tests Added: 15
 - Message: Added comprehensive model and controller tests
 
+### Iteration 4
+
+- Timestamp: 2026-03-09
+- Coverage Before: 52%
+- Coverage After: 52%
+- Tests Added: 0
+- Message: Fixed dependency errors in test files (package declarations, missing @MockBean)
+
 ## Audit Log
 
 AI CHANGE LOG
@@ -75,3 +83,20 @@ Files Modified:
 - OwnerTest.java
 
 Purpose: Increase coverage to 50%+ with comprehensive tests, resolved dependency errors in test packages.
+
+AI CHANGE LOG
+
+Timestamp: 2026-03-09  
+Branch: main  
+Commit: 99a5b78
+
+Coverage Before: 52%  
+Coverage After: 52%
+
+Files Modified:
+
+- VetControllerTest.java (changed to @WebMvcTest)
+- OwnerControllerTest.java (changed to @WebMvcTest, added @MockBean for PetTypeRepository)
+- VisitTest.java (fixed package declaration)
+
+Purpose: Fix dependency errors in test compilation and execution.
