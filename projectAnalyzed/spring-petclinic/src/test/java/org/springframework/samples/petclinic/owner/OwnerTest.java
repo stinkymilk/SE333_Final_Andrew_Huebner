@@ -90,9 +90,9 @@ class OwnerTest {
 	void shouldGetPetById() {
 		Owner owner = new Owner();
 		Pet pet = new Pet();
-		pet.setId(1);
 		pet.setName("Fluffy");
 		owner.addPet(pet);
+		pet.setId(1);
 		assertThat(owner.getPet(1)).isEqualTo(pet);
 	}
 
@@ -107,9 +107,9 @@ class OwnerTest {
 	void shouldAddVisitToPet() {
 		Owner owner = new Owner();
 		Pet pet = new Pet();
-		pet.setId(1);
 		pet.setName("Fluffy");
 		owner.addPet(pet);
+		pet.setId(1);
 		Visit visit = new Visit();
 		owner.addVisit(1, visit);
 		assertThat(pet.getVisits()).contains(visit);

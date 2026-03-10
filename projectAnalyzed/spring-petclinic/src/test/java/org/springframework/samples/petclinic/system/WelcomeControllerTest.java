@@ -36,9 +36,7 @@ class WelcomeControllerTest {
 
 	@Test
 	void testWelcome() throws Exception {
-		mockMvc.perform(get("/"))
-			.andExpect(status().isOk())
-			.andExpect(view().name("welcome"));
+		mockMvc.perform(get("/")).andExpect(status().isOk()).andExpect(view().name("welcome"));
 	}
 
 }

@@ -36,8 +36,7 @@ class CrashControllerTest {
 
 	@Test
 	void testTriggerException() throws Exception {
-		mockMvc.perform(get("/oups"))
-			.andExpect(status().is5xxServerError());
+		mockMvc.perform(get("/oups")).andExpect(status().is5xxServerError());
 	}
 
 }
