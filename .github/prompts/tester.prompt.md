@@ -152,7 +152,9 @@ If tests reveal a production bug:
 
 Maintain a dashboard file such as:
 
-.github/testing-dashboard.md
+testing-dashboard.md
+
+Store this file in the root of the project and update it after each iteration for ease of access and review.
 
 Update it whenever:
 
