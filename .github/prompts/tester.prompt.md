@@ -5,6 +5,16 @@ description: "Autonomous coverage-driven software testing agent."
 model: "Auto"
 ---
 
+# Tools
+
+#pars_jacoco_coverage - MCP tool to parse JaCoCo XML reports and extract coverage metrics.
+#analyze_coverage - MCP tool to analyze coverage data and identify uncovered code areas.
+
+- Junit 5
+- Maven
+- JaCoCo
+- Git
+
 Project root:
 
 ../projectAnalyzed/spring-petclinic
@@ -25,9 +35,50 @@ All AI-generated changes must be **traceable, reviewable, and reproducible**.
 
 ---
 
+# Testing Framework Standard
+
+All tests must be written using **JUnit 5 (JUnit Jupiter)**.
+
+Use:
+
+- `org.junit.jupiter.api.Test`
+- `org.junit.jupiter.api.BeforeEach`
+- `org.junit.jupiter.api.AfterEach`
+- `org.junit.jupiter.api.Assertions`
+
+Do NOT use:
+
+- JUnit 4 (`org.junit.Test`)
+- deprecated test frameworks
+
+JUnit 5 tests should follow best practices including:
+
+- descriptive test method names
+- clear Arrange–Act–Assert structure
+- small focused test cases
+
+When appropriate, use advanced JUnit 5 features such as:
+
+- `@ParameterizedTest`
+- `@ValueSource`
+- `@NullSource`
+- `@MethodSource`
+- `@Nested`
+- `assertThrows` for exception testing
+
+---
+
 # Coverage Standard
 
 Coverage must be measured using **JaCoCo**.
+
+Use the pars_jacoco_coverage tool to extract:
+
+- instruction coverage
+- branch coverage
+- method coverage
+- uncovered lines
+- uncovered branches
 
 Coverage reports are generated using:
 
@@ -56,6 +107,7 @@ Repeat the following cycle until termination criteria are met.
 ## 1. Assess Current State
 
 Run:
+
 mvn test
 
 If build fails, inspect stack traces to determine whether failures are due to:
@@ -67,16 +119,15 @@ mvn clean test jacoco:report
 
 Parse coverage using:
 
-analyze_coverage  
-or  
-jacoco-parser
+pars_jacoco_coverage(target/site/jacoco/jacoco.xml)
 
 Record:
 
 - instruction coverage
 - branch coverage
-- uncovered classes
-- uncovered methods
+- method coverage
+- uncovered lines
+- uncovered branches
 
 If tests fail:
 
@@ -90,7 +141,9 @@ If tests fail:
 Prioritize classes with:
 
 - lowest instruction coverage
-- uncovered methods
+- lowest branch coverage
+- lowest method coverage
+- uncovered lines
 - uncovered branches
 - complex conditional logic
 
@@ -103,6 +156,8 @@ Top N worst-covered classes.
 ## 3. Improve Tests
 
 Generate or improve tests that target uncovered code.
+
+Tests must use **JUnit 5**.
 
 Strategies include:
 
@@ -119,6 +174,14 @@ Tests should target **specific uncovered lines identified by JaCoCo**.
 
 If any previous tests failed due to dependency errors, resolve those first before improving coverage.
 
+When testing exceptions, prefer:
+
+assertThrows(Exception.class, () -> methodCall())
+
+When multiple input combinations are needed, prefer:
+
+JUnit 5 parameterized tests.
+
 ---
 
 ## 4. Coverage Feedback Loop
@@ -132,10 +195,12 @@ run_maven_tests(project_root, "test jacoco:report")
 Re-parse coverage.
 
 Compute coverage change.
+
 If coverage improved:
 
-- Execute: "git.prompt.md" to commit changes with message:
-  "Improve tests: +X% coverage, target Y classes"
+Execute: "git.prompt.md" to commit changes with message:
+
+"Improve tests: +X% coverage, target Y classes"
 
 ---
 
@@ -145,10 +210,14 @@ If tests reveal a production bug:
 
 1. Identify root cause.
 2. Implement the smallest safe fix.
-3. Add a regression test that reproduces the failure.
+3. Add a **JUnit 5 regression test** that reproduces the failure.
 4. Verify tests pass after the fix.
 
+---
+
 # Quality Metrics
+
+Use tool #testing_dashboard.py to maintain a dashboard of testing metrics.
 
 Maintain a dashboard file such as:
 
