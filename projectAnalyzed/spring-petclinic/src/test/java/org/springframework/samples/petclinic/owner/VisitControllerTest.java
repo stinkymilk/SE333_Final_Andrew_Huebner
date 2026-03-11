@@ -15,19 +15,30 @@
  */
 package org.springframework.samples.petclinic.owner;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 /**
  * Test class for {@link VisitController}
@@ -42,6 +53,26 @@ class VisitControllerTest {
 
 	@MockBean
 	private OwnerRepository ownerRepository;
+
+	private VisitController visitController;
+
+	private Owner testOwner;
+
+	private Pet testPet;
+
+	@BeforeEach
+	void setUp() {
+		visitController = new VisitController(ownerRepository);
+		testOwner = new Owner();
+		testOwner.setId(1);
+		testOwner.setFirstName("John");
+		testOwner.setLastName("Doe");
+
+		testPet = new Pet();
+		testPet.setId(1);
+		testPet.setName("Fluffy");
+		testOwner.addPet(testPet);
+	}
 
 	@Test
 	void testInitNewVisitForm() throws Exception {
@@ -95,6 +126,34 @@ class VisitControllerTest {
 			.andExpect(status().isOk())
 			.andExpect(model().attributeHasErrors("visit"))
 			.andExpect(view().name("pets/createOrUpdateVisitForm"));
+	}
+
+	@Test
+	void testInitNewVisitFormDirect() {
+		String view = visitController.initNewVisitForm();
+		assertThat(view).isEqualTo("pets/createOrUpdateVisitForm");
+	}
+
+	@Test
+	void testLoadPetWithVisitOwnerNotFound() {
+		when(ownerRepository.findById(999)).thenReturn(Optional.empty());
+
+		Map<String, Object> model = new HashMap<>();
+
+		assertThatThrownBy(() -> visitController.loadPetWithVisit(999, 1, model))
+			.isInstanceOf(IllegalArgumentException.class)
+			.hasMessageContaining("Owner not found");
+	}
+
+	@Test
+	void testLoadPetWithVisitPetNotFound() {
+		when(ownerRepository.findById(1)).thenReturn(Optional.of(testOwner));
+
+		Map<String, Object> model = new HashMap<>();
+
+		assertThatThrownBy(() -> visitController.loadPetWithVisit(1, 999, model))
+			.isInstanceOf(IllegalArgumentException.class)
+			.hasMessageContaining("Pet with id");
 	}
 
 }
