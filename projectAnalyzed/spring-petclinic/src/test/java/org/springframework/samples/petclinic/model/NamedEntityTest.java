@@ -46,4 +46,32 @@ class NamedEntityTest {
 		assertThat(namedEntity.toString()).isEqualTo("<null>");
 	}
 
+	@Test
+	void shouldUpdateName() {
+		NamedEntity namedEntity = new NamedEntity();
+		namedEntity.setName("Initial Name");
+		assertThat(namedEntity.getName()).isEqualTo("Initial Name");
+		namedEntity.setName("Updated Name");
+		assertThat(namedEntity.getName()).isEqualTo("Updated Name");
+		assertThat(namedEntity.toString()).isEqualTo("Updated Name");
+	}
+
+	@Test
+	void shouldSetNameToEmpty() {
+		NamedEntity namedEntity = new NamedEntity();
+		namedEntity.setName("Some Name");
+		namedEntity.setName("");
+		assertThat(namedEntity.getName()).isEmpty();
+		assertThat(namedEntity.toString()).isEqualTo("");
+	}
+
+	@Test
+	void shouldHaveIdFromBaseEntity() {
+		NamedEntity namedEntity = new NamedEntity();
+		namedEntity.setId(99);
+		namedEntity.setName("Test");
+		assertThat(namedEntity.getId()).isEqualTo(99);
+		assertThat(namedEntity.isNew()).isFalse();
+	}
+
 }

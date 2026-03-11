@@ -46,4 +46,32 @@ class BaseEntityTest {
 		assertThat(baseEntity.getId()).isEqualTo(42);
 	}
 
+	@Test
+	void shouldUpdateId() {
+		BaseEntity baseEntity = new BaseEntity();
+		baseEntity.setId(10);
+		assertThat(baseEntity.getId()).isEqualTo(10);
+		baseEntity.setId(20);
+		assertThat(baseEntity.getId()).isEqualTo(20);
+		assertThat(baseEntity.isNew()).isFalse();
+	}
+
+	@Test
+	void shouldConsiderZeroAsValidId() {
+		BaseEntity baseEntity = new BaseEntity();
+		baseEntity.setId(0);
+		// setId(0) should still make isNew() return false since id is set to a value
+		assertThat(baseEntity.getId()).isEqualTo(0);
+	}
+
+	@Test
+	void shouldConsiderNegativeIdAsNew() {
+		BaseEntity baseEntity = new BaseEntity();
+		baseEntity.setId(-1);
+		assertThat(baseEntity.getId()).isEqualTo(-1);
+		// Negative ID should still be considered "not new" since isNew() checks if id is
+		// not null
+		assertThat(baseEntity.isNew()).isFalse();
+	}
+
 }

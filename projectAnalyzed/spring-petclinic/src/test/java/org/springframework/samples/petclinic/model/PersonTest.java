@@ -40,4 +40,47 @@ class PersonTest {
 		assertThat(person.getLastName()).isEqualTo("Doe");
 	}
 
+	@Test
+	void shouldUpdateFirstName() {
+		Person person = new Person();
+		person.setFirstName("John");
+		assertThat(person.getFirstName()).isEqualTo("John");
+		person.setFirstName("Jane");
+		assertThat(person.getFirstName()).isEqualTo("Jane");
+	}
+
+	@Test
+	void shouldUpdateLastName() {
+		Person person = new Person();
+		person.setLastName("Doe");
+		assertThat(person.getLastName()).isEqualTo("Doe");
+		person.setLastName("Smith");
+		assertThat(person.getLastName()).isEqualTo("Smith");
+	}
+
+	@Test
+	void shouldSetFirstAndLastNameTogether() {
+		Person person = new Person();
+		person.setFirstName("Robert");
+		person.setLastName("Johnson");
+		assertThat(person.getFirstName()).isEqualTo("Robert");
+		assertThat(person.getLastName()).isEqualTo("Johnson");
+	}
+
+	@Test
+	void shouldSetFirstNameToEmpty() {
+		Person person = new Person();
+		person.setFirstName("Michael");
+		person.setFirstName("");
+		assertThat(person.getFirstName()).isEmpty();
+	}
+
+	@Test
+	void shouldSetLastNameToEmpty() {
+		Person person = new Person();
+		person.setLastName("Williams");
+		person.setLastName("");
+		assertThat(person.getLastName()).isEmpty();
+	}
+
 }
