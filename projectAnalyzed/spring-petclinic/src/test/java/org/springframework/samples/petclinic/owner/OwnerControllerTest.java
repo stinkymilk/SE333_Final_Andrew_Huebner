@@ -94,9 +94,7 @@ class OwnerControllerTest {
 
 	@Test
 	void testInitFindForm() throws Exception {
-		mockMvc.perform(get("/owners/find"))
-			.andExpect(status().isOk())
-			.andExpect(view().name("owners/findOwners"));
+		mockMvc.perform(get("/owners/find")).andExpect(status().isOk()).andExpect(view().name("owners/findOwners"));
 	}
 
 	@Test
@@ -156,8 +154,7 @@ class OwnerControllerTest {
 	void testFindOwnerNotFound() {
 		when(ownerRepository.findById(999)).thenReturn(Optional.empty());
 
-		assertThatThrownBy(() -> ownerController.findOwner(999))
-			.isInstanceOf(IllegalArgumentException.class)
+		assertThatThrownBy(() -> ownerController.findOwner(999)).isInstanceOf(IllegalArgumentException.class)
 			.hasMessageContaining("Owner not found");
 	}
 
