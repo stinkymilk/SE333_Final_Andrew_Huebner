@@ -48,4 +48,26 @@ class VetTest {
 		assertThat(vet.getSpecialties()).contains(specialty);
 	}
 
+	@Test
+	void shouldAddMultipleSpecialties() {
+		Vet vet = new Vet();
+		Specialty specialty1 = new Specialty();
+		specialty1.setName("Surgery");
+		Specialty specialty2 = new Specialty();
+		specialty2.setName("Radiology");
+		vet.addSpecialty(specialty1);
+		vet.addSpecialty(specialty2);
+		assertThat(vet.getNrOfSpecialties()).isEqualTo(2);
+		assertThat(vet.getSpecialties()).contains(specialty1, specialty2);
+	}
+
+	@Test
+	void shouldSetFirstAndLastName() {
+		Vet vet = new Vet();
+		vet.setFirstName("James");
+		vet.setLastName("Carter");
+		assertThat(vet.getFirstName()).isEqualTo("James");
+		assertThat(vet.getLastName()).isEqualTo("Carter");
+	}
+
 }

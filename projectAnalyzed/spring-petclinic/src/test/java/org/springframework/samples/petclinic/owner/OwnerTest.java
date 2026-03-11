@@ -115,4 +115,43 @@ class OwnerTest {
 		assertThat(pet.getVisits()).contains(visit);
 	}
 
+	@Test
+	void shouldGetPetByNameCaseInsensitive() {
+		Owner owner = new Owner();
+		Pet pet = new Pet();
+		pet.setName("Fluffy");
+		owner.addPet(pet);
+		assertThat(owner.getPet("fluffy")).isEqualTo(pet);
+		assertThat(owner.getPet("FLUFFY")).isEqualTo(pet);
+	}
+
+	@Test
+	void shouldGetPetByNameWithIgnoreNewFalse() {
+		Owner owner = new Owner();
+		Pet pet = new Pet();
+		pet.setName("Fluffy");
+		owner.addPet(pet);
+		assertThat(owner.getPet("Fluffy", false)).isEqualTo(pet);
+	}
+
+	@Test
+	void shouldGetPetByNameWithIgnoreNewTrue() {
+		Owner owner = new Owner();
+		Pet newPet = new Pet();
+		newPet.setName("Fluffy");
+		owner.addPet(newPet);
+		// New pet should be ignored when ignoreNew=true
+		assertThat(owner.getPet("Fluffy", true)).isNull();
+	}
+
+	@Test
+	void shouldHaveToString() {
+		Owner owner = new Owner();
+		owner.setId(1);
+		owner.setFirstName("John");
+		owner.setLastName("Doe");
+		String str = owner.toString();
+		assertThat(str).isNotEmpty().contains("John").contains("Doe");
+	}
+
 }

@@ -65,4 +65,34 @@ class PetTest {
 		assertThat(pet.getVisits()).contains(visit);
 	}
 
+	@Test
+	void shouldSetName() {
+		Pet pet = new Pet();
+		pet.setName("Fluffy");
+		assertThat(pet.getName()).isEqualTo("Fluffy");
+	}
+
+	@Test
+	void shouldBeNewPetWhenNoIdSet() {
+		Pet pet = new Pet();
+		assertThat(pet.isNew()).isTrue();
+	}
+
+	@Test
+	void shouldNotBeNewWhenIdSet() {
+		Pet pet = new Pet();
+		pet.setId(1);
+		assertThat(pet.isNew()).isFalse();
+	}
+
+	@Test
+	void shouldAddMultipleVisits() {
+		Pet pet = new Pet();
+		Visit visit1 = new Visit();
+		Visit visit2 = new Visit();
+		pet.addVisit(visit1);
+		pet.addVisit(visit2);
+		assertThat(pet.getVisits()).contains(visit1, visit2).hasSize(2);
+	}
+
 }

@@ -50,4 +50,30 @@ class VisitTest {
 		assertThat(visit.getDescription()).isEqualTo("Annual checkup");
 	}
 
+	@Test
+	void shouldSetDescriptionToEmpty() {
+		Visit visit = new Visit();
+		visit.setDescription("Initial description");
+		visit.setDescription("");
+		assertThat(visit.getDescription()).isEmpty();
+	}
+
+	@Test
+	void shouldUpdateDateMultipleTimes() {
+		Visit visit = new Visit();
+		LocalDate date1 = LocalDate.of(2023, 5, 15);
+		LocalDate date2 = LocalDate.of(2024, 6, 20);
+		visit.setDate(date1);
+		assertThat(visit.getDate()).isEqualTo(date1);
+		visit.setDate(date2);
+		assertThat(visit.getDate()).isEqualTo(date2);
+	}
+
+	@Test
+	void shouldHaveToString() {
+		Visit visit = new Visit();
+		visit.setDescription("Test visit");
+		assertThat(visit.toString()).isNotNull().contains("Visit");
+	}
+
 }

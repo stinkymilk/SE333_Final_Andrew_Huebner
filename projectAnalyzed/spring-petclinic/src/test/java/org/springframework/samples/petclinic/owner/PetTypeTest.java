@@ -39,4 +39,28 @@ class PetTypeTest {
 		assertThat(petType.getName()).isEqualTo("Dog");
 	}
 
+	@Test
+	void shouldUpdateName() {
+		PetType petType = new PetType();
+		petType.setName("Cat");
+		assertThat(petType.getName()).isEqualTo("Cat");
+		petType.setName("Bird");
+		assertThat(petType.getName()).isEqualTo("Bird");
+	}
+
+	@Test
+	void shouldSetNameToEmpty() {
+		PetType petType = new PetType();
+		petType.setName("Hamster");
+		petType.setName("");
+		assertThat(petType.getName()).isEmpty();
+	}
+
+	@Test
+	void shouldHaveToString() {
+		PetType petType = new PetType();
+		petType.setName("Rabbit");
+		assertThat(petType.toString()).isNotNull().contains("Rabbit");
+	}
+
 }
